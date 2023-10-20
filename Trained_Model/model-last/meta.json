@@ -1,0 +1,124 @@
+{
+  "lang":"en",
+  "name":"pipeline",
+  "version":"0.0.0",
+  "spacy_version":">=3.7.1,<3.8.0",
+  "description":"",
+  "author":"",
+  "email":"",
+  "url":"",
+  "license":"",
+  "spacy_git_version":"9d036607f",
+  "vectors":{
+    "width":0,
+    "vectors":0,
+    "keys":0,
+    "name":null,
+    "mode":"default"
+  },
+  "labels":{
+    "tok2vec":[
+
+    ],
+    "ner":[
+      "ACHIEVEMENTS",
+      "ADDRESS",
+      "CERTIFICATIONS",
+      "EMAIL",
+      "EXTRA CURRICULAR",
+      "GRADUATION",
+      "JOB ROLE",
+      "NAME",
+      "ONLINE PROFILES",
+      "PERCENTAGE",
+      "PROJECTS",
+      "SKILLS",
+      "WORK EXPERIENCE"
+    ]
+  },
+  "pipeline":[
+    "tok2vec",
+    "ner"
+  ],
+  "components":[
+    "tok2vec",
+    "ner"
+  ],
+  "disabled":[
+
+  ],
+  "performance":{
+    "ents_f":0.2697110904,
+    "ents_p":0.431425164,
+    "ents_r":0.1961767896,
+    "ents_per_type":{
+      "ACHIEVEMENTS":{
+        "p":0.1224489796,
+        "r":0.16,
+        "f":0.1387283237
+      },
+      "SKILLS":{
+        "p":0.4475484607,
+        "r":0.1649506199,
+        "f":0.2410563488
+      },
+      "PERCENTAGE":{
+        "p":0.3235294118,
+        "r":0.2115384615,
+        "f":0.2558139535
+      },
+      "EXTRA CURRICULAR":{
+        "p":0.6397058824,
+        "r":0.3609958506,
+        "f":0.4615384615
+      },
+      "PROJECTS":{
+        "p":0.1395348837,
+        "r":0.0697674419,
+        "f":0.0930232558
+      },
+      "ADDRESS":{
+        "p":0.223880597,
+        "r":0.0519031142,
+        "f":0.0842696629
+      },
+      "GRADUATION":{
+        "p":0.4170616114,
+        "r":0.3928571429,
+        "f":0.4045977011
+      },
+      "NAME":{
+        "p":0.6772486772,
+        "r":0.4776119403,
+        "f":0.5601750547
+      },
+      "JOB ROLE":{
+        "p":0.3342696629,
+        "r":0.3148148148,
+        "f":0.3242506812
+      },
+      "WORK EXPERIENCE":{
+        "p":0.2042253521,
+        "r":0.0549242424,
+        "f":0.0865671642
+      },
+      "EMAIL":{
+        "p":0.8203125,
+        "r":0.7894736842,
+        "f":0.8045977011
+      },
+      "CERTIFICATIONS":{
+        "p":0.2368421053,
+        "r":0.1153846154,
+        "f":0.1551724138
+      },
+      "ONLINE PROFILES":{
+        "p":0.7894736842,
+        "r":0.7317073171,
+        "f":0.7594936709
+      }
+    },
+    "tok2vec_loss":4881.3642578572,
+    "ner_loss":8847.6462863832
+  }
+}
