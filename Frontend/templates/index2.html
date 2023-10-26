@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Processing</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background-color: lightgray;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px;
+        }
+
+        form {
+            text-align: center;
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #results {
+    padding: 20px;
+    text-align: center;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(194, 174, 174, 0.2);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+li:nth-child(even) {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Resume Processing</h1>
+    <form>
+        <input type="file" accept=".txt" id="fileUpload" name="file" style="display: none;" />
+        <label for="fileUpload" style="cursor: pointer; background-color: #007BFF; color: #fff; padding: 10px 20px; border: none;">Upload a Text File</label>
+        <br>
+        <br>
+        <textarea id="fileContent" placeholder="File content will be displayed here" readonly style="display: none;"></textarea>
+    </form>
+    <form>
+        <input type="file" accept=".txt, .doc, .docx, .pdf" id="resumeUpload" style="display: none;" />
+        <label for="resumeUpload" style="cursor: pointer; background-color: #007BFF; color: #fff; padding: 10px 20px; border: none; display: none;">Upload Resume</label>
+        <br>
+        <textarea name="text" rows="10" cols="5" placeholder="Or paste your resume here" ></textarea>
+        <br>
+        <button type="button" id="processButton" class="btn btn-primary mt-3">View Result</button>
+
+    </form>
+
+    <div><a id="downloadLink" style="cursor: pointer; align-items: center; background-color: #0663f8; color: #ffffff; padding: 10px 20px; border: none; text-decoration: none;">Download Result</a></div>
+    <div id="results">Result</div>
+
+    <script>
+        const fileUpload = document.getElementById("fileUpload");
+        const fileContent = document.getElementById("fileContent");
+        const processButton = document.getElementById("processButton");
+
+        fileUpload.addEventListener("change", function () {
+            const selectedFile = fileUpload.files[0];
+            if (selectedFile) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const fileText = e.target.result;
+                    fileContent.value = fileText;
+                };
+
+                reader.readAsText(selectedFile);
+            }
+        });
+
+        processButton.addEventListener("click", function () {
+            const fileInput = document.getElementById("fileUpload");
+            const resumeText = fileInput.files.length > 0 ? fileContent.value : document.querySelector("textarea[name='text']").value;
+            const apiUrl = "http://127.0.0.1:8000/resume-parser";  // Update the URL as needed
+
+            callApi(apiUrl, resumeText);
+        });
+
+        function callApi(apiUrl, resumeText) {
+            fetch(apiUrl + "?text=" + encodeURIComponent(resumeText))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    // Convert the API response to the needed format (e.g., formatting it as a list)
+                    const formattedResult = formatApiResponse(data);
+
+                    // Display the formatted result on the webpage
+                    document.getElementById("results").innerHTML = formattedResult;
+                })
+                .catch(error => {
+                    console.error("API Error:", error);
+                    // Display the error message on the webpage
+                    document.getElementById("results").innerText = `API Error: ${error.message}`;
+                });
+        }
+
+        function formatApiResponse(data) {
+            // For example, converting the data to an unordered list
+            let result = '<ul>';
+            for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    result += '<li>' + key + ': ' + data[key] + '</li>';
+                }
+            }
+            result += '</ul>';
+
+            return result;
+
+        }
+        function Show_result()
+        {
+
+const downloadLink = document.getElementById("downloadLink");
+const resultsContainer = document.getElementById("results");
+
+downloadLink.addEventListener("click", function () {
+    // Get the text content from the results container
+    const resultText = resultsContainer.innerText;
+
+    // Create a blob (binary large object) containing the text content
+    const blob = new Blob([resultText], { type: "text/plain" });
+
+    // Create a URL for the blob
+    const url = URL.createObjectURL(blob);
+
+    // Set the URL as the download link's href and specify a filename
+    downloadLink.href = url;
+    downloadLink.download = "result.txt";
+    });
+        }
+    </script>
+
+</body>
+</html>
