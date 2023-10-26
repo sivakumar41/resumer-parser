@@ -1,5 +1,5 @@
 # resumer-parser
-Read the README for better understanding....
+Read the README for better understanding....<br>
 0) Trained_model floder contains the Models..
 1)This repository contains the files related to the resumer parser.
 2)ANNOTATION FILES floder contains the resume annotation prepared by ME in the json format.
